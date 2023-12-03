@@ -8,10 +8,10 @@ As part of fifth year project in Esprit university , I have implemented a CD/CI 
 ## Tools and technologies used in this project
 
 
-**Vagrant**:  IAC infrastructure as code vagrantfile contains two node one the Master node which contains the ansible roles and the other is the jenkins server.
-**Ansible**: ansible roles to installe various packeges such docker, docker compose, Java 11 , maven and Jenkins.
-**Jenkins**: Two nodes : the first one run locally as the jenkins master and the second as the worker node run in the cloud in Microsoft azure virtual machine.
-Github: contain Two private repository :
+- **Vagrant**:  IAC infrastructure as code vagrantfile contains two node one the Master node which contains the ansible roles and the other is the jenkins server.
+- **Ansible**: ansible roles to installe various packeges such docker, docker compose, Java 11 , maven and Jenkins.
+- **Jenkins**: Two nodes : the first one run locally as the jenkins master and the second as the worker node run in the cloud in Microsoft azure virtual machine.
+- **Github**: contain Two private repository :
  1. FrontEnd with Angular
  2. BackEnd with spring 
  
