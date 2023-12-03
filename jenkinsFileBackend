@@ -1,0 +1,105 @@
+pipeline {
+    
+   agent {  label 'AZ_VM' }
+   tools { jdk 'OracleJDK8'  }
+   options { buildDiscarder(logRotator(numToKeepStr: '5')) }
+   environment {
+            DOCKERHUB_CREDENTIALS = credentials('dockerhub_token')
+            DOCKER_TAG_BACKEND="be-version:1"
+            DOCKER_TAG_FRONTEND="fe-version:1"
+  }
+
+    stages {
+        stage('Clone  the Backend Repository From github') {
+            steps {
+                echo "Beginning Cloning BE from GitHub"
+                git credentialsId: 'PAT_Jenkins', url: 'https://github.com/Timoumi-Mahmoud/DevopsBackEnd.git'
+            }
+        }
+        stage('Build process'){
+            steps {
+                echo "Installing Dependencies with Maven"
+                sh 'mvn clean compile'
+            }
+        }
+   
+        stage('Run unit TESTS') {
+            steps {
+                echo "Beginning Test process \n"
+                sh 'mvn install'
+            }
+        }
+        stage('JACOCO TEST coverage '){
+         steps {
+                        echo "begin Test coverage with JACOCO  \n "
+                          sh 'mvn jacoco:report'
+                         jacoco(execPattern: '**/target/jacoco.exec')
+
+
+                    }
+             }
+
+         stage('Deploy to Nexus') {
+          steps {
+            sh 'mvn deploy -DskipTests'
+                 }
+                    }
+
+       stage('Scan project with SonarQube') {
+           steps {
+             withSonarQubeEnv(installationName: 'sq1') {
+               echo "Beginning Code inspection with SonarQube"
+               sh 'mvn sonar:sonar'
+             }
+            }
+        }
+//
+//         stage('Load Testing with jmeter'){
+//         steps{
+// //           sh "sed -i 's/127.0.0.1/g' JmeterLoadTesting.jmx "
+//             sh '/home/mahmoud/ApacheJmeter/apache-jmeter-5.5/bin/jmeter  -n -t  JmeterLoadTesting.jmx    -l allResults.jtl'
+//             sh 'cat allResults.jtl'
+//             perfReport 'allResults.jtl'
+//         }
+//         }
+//
+
+       stage('Build Docker image') {
+           steps {
+               echo "Creating a docker image for the BE"
+               sh "docker build -t mahmoudtimoumi/${DOCKER_TAG_BACKEND} ."
+               sh 'docker images'
+            }
+            }
+
+       stage('Push image to  DockerHub') {
+             steps {
+               echo 'trying to Login TO DockerHub \n'
+              sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+               echo 'Login Completed '
+                echo "begin pushing to dockerHub"
+                sh "docker push mahmoudtimoumi/${DOCKER_TAG_BACKEND}"
+                }
+            }
+
+        stage('Deployment with Docker-compose') {
+              steps {
+                 echo "begin deploying the application with docker-compose"
+                  sh "DOCKER_TAG_BACKEND=${DOCKER_TAG_BACKEND} DOCKER_TAG_FRONTEND=${DOCKER_TAG_FRONTEND}  docker-compose up -d"
+                            }
+                   }
+    }
+
+    post {
+        always {
+            mail (
+                  from: "timoumimahmoud616@gmail.com",
+                  subject: "Pipeline ${currentBuild.currentResult}: ${env.JOB_NAME}",
+                  body: "${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL}",
+                  to: "mahmoud.timoumi@esprit.tn",
+            )
+
+        sh 'docker logout'
+        }
+    }
+}
