@@ -1,0 +1,64 @@
+pipeline {
+
+   agent {  label 'AZ_VM' }
+     tools {
+           git 'Default'
+          }
+   options { buildDiscarder(logRotator(numToKeepStr: '5')) }
+     environment {
+    DOCKERHUB_CREDENTIALS = credentials('dockerhub_token')
+    DOCKER_TAG_FRONTEND = "fe-version:1"
+  }
+
+    stages {
+      stage('Clone Front end Repository') {
+         steps {
+           echo "Beginning Cloning FE from GitHub"
+           git credentialsId: 'PAT_Jenkins', url: 'https://github.com/Timoumi-Mahmoud/DevopsFrontEnd.git'
+         }
+       }
+
+         stage('Scan project with SonarQube') {
+                steps {
+                 withSonarQubeEnv(installationName: 'sq1') {
+                      echo "Beginning Code inspection with SonarQube"
+                      sh 'npm install'
+                      sh 'ls -al'
+                      sh '/home/jenkins/work/workspace/FrontEnd/node_modules/sonar-scanner/bin/sonar-scanner   -Dsonar.projectKey=frontend-devops'
+                            }
+                }
+              }
+
+   stage('Build Docker image') {
+       steps {
+         echo "Creating a docker image for the FE"
+         sh " time docker build -t mahmoudtimoumi/${DOCKER_TAG_FRONTEND} ."
+         sh 'docker images'
+        }
+        }
+
+
+     stage('Push image to DockerHub') {
+         steps {
+           sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            echo 'Login Completed to dockerHub \n'
+
+            echo "begin pushing to dockerHub ...."
+            sh "docker push mahmoudtimoumi/${DOCKER_TAG_FRONTEND}"
+            }
+        }
+    }
+
+    post {
+        always {
+            mail (
+                    from: "timoumimahmoud616@gmail.com",
+                    subject: "Pipeline ${currentBuild.currentResult}: ${env.JOB_NAME}",
+                    body: "${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL}",
+                    to: "mahmoud.timoumi@esprit.tn",
+)
+
+        sh 'docker logout'
+        }
+    }
+}
