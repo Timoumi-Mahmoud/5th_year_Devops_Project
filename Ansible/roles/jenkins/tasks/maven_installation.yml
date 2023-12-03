@@ -1,0 +1,13 @@
+
+- name: "install Maven"
+  apt:
+   name: maven
+   update_cache: no
+
+
+- name: "add MAVEN to Envirenment Variables"
+  lineinfile:
+   path: /etc/environment
+   line:  'export M2_HOME="/usr/share/maven"' 
+   state: present
+   backup: yes

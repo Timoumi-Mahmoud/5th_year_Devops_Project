@@ -1,0 +1,17 @@
+- name: Ensure docker is installed
+  apt:
+   name: docker.io
+   state: latest
+  notify: restart docker
+      
+
+- name: Ensure Docker Compose is installed
+  apt:
+    name: docker-compose
+    state: latest
+
+
+- name: Add user to docker group
+  user:
+    name: vagrant
+    groups: docker

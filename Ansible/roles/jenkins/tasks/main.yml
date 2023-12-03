@@ -1,0 +1,7 @@
+---
+# tasks file for roles/jenkins
+
+
+- include: jdk_installation.yml
+- include: maven_installation.yml
+- include: jenkins_installation.yml

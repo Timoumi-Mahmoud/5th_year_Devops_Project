@@ -1,0 +1,40 @@
+- name: Add Jenkins APT Key
+  shell: wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+  when: not ansible_check_mode  # Only run the command in actual execution, not in check mode.
+
+- name: Add Jenkins APT Repository
+  shell: sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+  when: not ansible_check_mode  # Only run the command in actual execution, not in check mode.
+
+- name: Add Jenkins APT Key from Ubuntu Keyserver
+  shell: sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5BA31D57EF5975CA
+  when: not ansible_check_mode  # Only run the command in actual execution, not in check mode.
+
+- name: Update APT Cache
+  apt:
+    update_cache: yes
+
+- name: Install Jenkins
+  apt:
+    name: jenkins
+    state: present
+
+- name: Start Jenkins service
+  service:
+    name: jenkins
+    state: started
+    enabled: yes
+
+
+- name: Wait for Jenkins to start
+  wait_for:
+    port: 8080
+    timeout: 180
+
+- name: Get Jenkins initial admin password
+  command: cat /var/lib/jenkins/secrets/initialAdminPassword
+  register: jenkins_initial_password
+
+- name: Display Jenkins initial admin password
+  debug:
+    var: jenkins_initial_password.stdout_lines
