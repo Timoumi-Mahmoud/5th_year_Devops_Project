@@ -17,7 +17,7 @@ As part of fifth year project in Esprit university , I have implemented a CD/CI 
  
 
 ## Architecture
-![Image]([DevopsProjectArchitecture.png])
+![Image](DevopsProjectArchitecture.png)
 
 ## Steps:
 - Step 1: Jenkins Pipeline Creation
