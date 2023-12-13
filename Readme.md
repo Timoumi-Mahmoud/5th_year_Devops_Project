@@ -20,7 +20,7 @@ As part of fifth year project in Esprit university , I have implemented a CD/CI 
 ## Architecture
 
 
-![Image](Images/DevopsProjectArchitecture 1.png)
+![Image](Images/arch.png)
 
 
 ## Steps:
