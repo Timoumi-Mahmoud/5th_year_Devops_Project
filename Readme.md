@@ -47,7 +47,8 @@ As part of fifth year project in Esprit university , I have implemented a CD/CI 
 ![Image](Images/connectionToAgent.png)
 
 `Setting webhook on push`
-![Image](Images/6-githubWebhook.png]]![[6-githubWebhookTWO.png)
+![Image](Images/6-githubWebhook.png]]
+![Image](Images/6-githubWebhookTWO.png)
 
 `Docker compose of Promethues and grafana`
 ![Image](Images/3-promtehus_grafana_nexusContainers.png)
