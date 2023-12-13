@@ -20,8 +20,8 @@ As part of fifth year project in Esprit university , I have implemented a CD/CI 
 ## Architecture
 
 
+![Image](Images/DevopsProjectArchitecture 1.png)
 
-![[Images/DevopsProjectArchitecture 1.png]]
 
 ## Steps:
 - Step 1: Jenkins Pipeline Creation
@@ -38,53 +38,53 @@ As part of fifth year project in Esprit university , I have implemented a CD/CI 
 ## Realisation
 
 `Jenkins Dashbord` 
-![[1-JenkinsDash.png]]
+![Image](Images/1-JenkinsDash.png)
 
 `Jenkins Agent`
-![[azure_dash.png]]
+![Image](Images/azure_dash.png)
 
 `connection between jenkins master and agent with JPNL and websocket`
-![[connectionToAgent.png]]
+![Image](Images/connectionToAgent.png)
 
 `Setting webhook on push`
-![[6-githubWebhook.png]]![[6-githubWebhookTWO.png]]  
+![Image](Images/6-githubWebhook.png]]![[6-githubWebhookTWO.png)
 
 `Docker compose of Promethues and grafana`
-![[3-promtehus_grafana_nexusContainers.png]]
+![Image](Images/3-promtehus_grafana_nexusContainers.png)
 
 `Nexus dashbord (running inside a container)`
-![[4-nexus.png]]
+![Image](Images/4-nexus.png)
 
 
 `Promethues info`
-![[5-prometheus.png]]
+![Image](Images/5-prometheus.png)
 
 `Grafana Dashbord`
-![[grafana.png]]
+![Image](Images/grafana.png)
 
-![[grafanaTWO.png]]
+![Image](Images/grafanaTWO.png)
 `Pipeline Steps of the BackenD`
-![[7-diagram.png]]
+![Image](Images/7-diagram.png)
 `Pipeline Steps of the FrontEnd`
-![[diagramFront.png]]
+![Image](Images/diagramFront.png)
 
 `SonarQube`
 
-![[Sonar.png]]
+![Image](Images/Sonar.png)
 
 `Azure dns`
-![[8-deploy.png]]
+![Image](Images/8-deploy.png)
 
 `Web application Accesable in the internet`
-![[9-deploy.png]]
+![Image](Images/9-deploy.png)
 
 `The three containers of backend, front and Database`
-![[containerInsideTheAgent.png]]
+![Image](Images/containerInsideTheAgent.png)
 
 `Post pipline : Send notfication email `
-![[emailnotification.png]]
+![Image](Images/emailnotification.png)
 
-![[notificationFront.png]]
+![Image](Images/notificationFront.png)
 
 
 
