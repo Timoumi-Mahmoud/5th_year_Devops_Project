@@ -9,12 +9,12 @@ As part of fifth year project in Esprit university , I have implemented a CD/CI 
 
 
 - **Vagrant**:  IAC infrastructure as code vagrantfile contains two node one the Master node which contains the ansible roles and the other is the jenkins server.
-- **Ansible**: ansible roles to installe various packeges such docker, docker compose, Java 11 , maven and Jenkins.
+- **Ansible**: ansible playbook to installe various packeges such docker, docker compose, Java 11 , maven and Jenkins.
 - **Jenkins**: Two nodes : the first one run locally as the jenkins master and the second as the worker node run in the cloud in Microsoft azure virtual machine.
 - **Github**: contain Two private repository :
          1. FrontEnd with Angular
          2. BackEnd with spring
-- **Playit.gg**: networking sreviceto create a tunnel between localhost machine and a fixed public ip address. (this public ip address will be used in setting up webhook, and the comminucation betwing the Jenkins master(in premises) and jenkins agent  of-premises in azure )
+- **Playit.gg**: networking srevice to create a tunnel between localhost machine and a fixed public ip address. (this public ip address will be used in setting up webhook, and the comminucation betwing the Jenkins master(in premises) and jenkins agent  of-premises in azure )
 
 
 ## Architecture
