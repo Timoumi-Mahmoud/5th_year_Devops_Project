@@ -14,7 +14,7 @@ As part of fifth year project in Esprit university , I have implemented a CD/CI 
 - **Github**: contain Two private repository :
          1. FrontEnd with Angular
          2. BackEnd with spring
-- Playit.gg: networking srevice that create enable to create a tunnel between localhost machine and a fixed public ip address. (this public ip address will be used in setting up webhook, and the comminucation betwing the Jenkins master(in premises) and jenkins agent  of-premises in azure )
+- **Playit.gg**: networking sreviceto create a tunnel between localhost machine and a fixed public ip address. (this public ip address will be used in setting up webhook, and the comminucation betwing the Jenkins master(in premises) and jenkins agent  of-premises in azure )
 
 
 ## Architecture
